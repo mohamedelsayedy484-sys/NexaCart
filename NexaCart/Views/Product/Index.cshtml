@@ -1,0 +1,261 @@
+﻿@model IEnumerable<NexaCart.Models.Product>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<div class="container-fluid py-4">
+
+    <!-- Page Header -->
+    <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center
+                gap-3 mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                Products
+            </h2>
+
+            <p class="text-muted mb-0">
+                Manage and organize your store products.
+            </p>
+        </div>
+
+        <a asp-action="Create"
+           class="btn btn-primary px-4">
+
+            <i class="bi bi-plus-lg me-2"></i>
+            Add Product
+
+        </a>
+
+    </div>
+
+
+    <!-- Products Card -->
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-0">
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table align-middle mb-0">
+
+                        <thead class="table-light">
+
+                            <tr>
+
+                                <th class="ps-4">
+                                    #
+                                </th>
+
+                                <th>
+                                    Product
+                                </th>
+
+                                <th>
+                                    Category
+                                </th>
+
+                                <th>
+                                    Price
+                                </th>
+
+                                <th>
+                                    Stock
+                                </th>
+
+                                <th class="text-end pe-4">
+                                    Actions
+                                </th>
+
+                            </tr>
+
+                        </thead>
+
+
+                        <tbody>
+
+                            @{
+                                int counter = 1;
+                            }
+
+                            @foreach (var product in Model)
+                            {
+                                <tr>
+
+                                    <!-- Number -->
+                                    <td class="ps-4 text-muted">
+                                        @counter
+                                    </td>
+
+
+                                    <!-- Product -->
+                                    <td>
+
+                                        <div class="d-flex align-items-center">
+
+                                            <div class="bg-primary bg-opacity-10
+                                                        text-primary rounded
+                                                        d-flex align-items-center
+                                                        justify-content-center me-3"
+                                                 style="width:45px;height:45px;">
+
+                                                <i class="bi bi-box-seam"></i>
+
+                                            </div>
+
+                                            <div>
+
+                                                <div class="fw-semibold">
+                                                    @product.Name
+                                                </div>
+
+                                                <small class="text-muted">
+                                                    Product #@product.Id
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
+                                    </td>
+
+
+                                    <!-- Category -->
+                                    <td>
+
+                                        <span class="text-muted">
+                                            @product.Category?.Name
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Price -->
+                                    <td>
+
+                                        <span class="fw-semibold">
+                                            @product.Price.ToString("C",
+                                            new System.Globalization.CultureInfo("en-US"))
+                                        </span>
+
+                                    </td>
+
+
+                                    <!-- Stock -->
+                                    <td>
+
+                                        @if (product.Stock > 0)
+                                        {
+                                            <span class="badge text-bg-success">
+                                                @product.Stock
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge text-bg-danger">
+                                                Out of Stock
+                                            </span>
+                                        }
+
+                                    </td>
+
+
+                                    <!-- Actions -->
+                                    <td class="text-end pe-4">
+
+                                        <div class="btn-group">
+
+                                            <a asp-action="Details"
+                                               asp-route-id="@product.Id"
+                                               class="btn btn-sm"
+                                               title="View details">
+
+                                                <i class="bi bi-eye"></i>
+
+                                            </a>
+
+
+                                            <a asp-action="Edit"
+                                               asp-route-id="@product.Id"
+                                               class="btn btn-sm"
+                                               title="Edit product">
+
+                                                <i class="bi bi-pencil"></i>
+
+                                            </a>
+
+
+                                            <a asp-action="Delete"
+                                               asp-route-id="@product.Id"
+                                               class="btn btn-sm text-danger"
+                                               title="Delete product">
+
+                                                <i class="bi bi-trash"></i>
+
+                                            </a>
+
+                                        </div>
+
+                                    </td>
+
+                                </tr>
+
+                                counter++;
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <!-- Empty State -->
+
+                <div class="text-center py-5">
+
+                    <div class="mb-3">
+
+                        <div class="bg-primary bg-opacity-10
+                                    text-primary rounded-circle
+                                    d-inline-flex
+                                    align-items-center
+                                    justify-content-center"
+                             style="width:70px;height:70px;">
+
+                            <i class="bi bi-box-seam fs-2"></i>
+
+                        </div>
+
+                    </div>
+
+                    <h5 class="fw-semibold">
+                        No Products Found
+                    </h5>
+
+                    <p class="text-muted mb-4">
+                        You haven't added any products yet.
+                    </p>
+
+                    <a asp-action="Create"
+                       class="btn btn-primary px-4">
+
+                        <i class="bi bi-plus-lg me-2"></i>
+                        Add First Product
+
+                    </a>
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>
